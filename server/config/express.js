@@ -25,11 +25,15 @@ module.exports.init = function() {
     res.send(req.results);
   });
 
+  app.use('/api/listings',listingsRouter);
   /* serve static files */
-app.use('/static',express.static('client'));
+app.use('/',express.static('client'));
 
   /* use the listings router for requests to the api */
-
+  app.all('/*', function(req, res) {
+      res.sendFile(path.resolve('client/index.html'));
+      //res.status(404).send('Bad gateway error');
+  });
 
   /* go to homepage for all routes not specified */
 
